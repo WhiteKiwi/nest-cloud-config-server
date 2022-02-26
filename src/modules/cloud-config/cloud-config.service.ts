@@ -2,13 +2,14 @@ import { Inject, Injectable } from '@nestjs/common';
 import { readdir, readFile } from 'fs/promises';
 import { load as parseYml } from 'js-yaml';
 import { join, parse as parsePath } from 'path';
-import { CONFIGS_MAP_KEY } from './constants';
-import { Config } from './types';
+
+import { Config } from '../../core/types';
+import { CONFIG_MAP_KEY } from './constants';
 
 @Injectable()
 export class CloudConfigService {
 	constructor(
-		@Inject(CONFIGS_MAP_KEY)
+		@Inject(CONFIG_MAP_KEY)
 		private readonly configMap: Map<string, unknown>,
 	) {}
 

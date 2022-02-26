@@ -1,15 +1,16 @@
 import { Module, OnModuleInit } from '@nestjs/common';
+
 import { configsDirPath } from '../../config';
 import { CloudConfigController } from './cloud-config.controller';
 import { CloudConfigService } from './cloud-config.service';
-import { CONFIGS_MAP_KEY } from './constants';
+import { CONFIG_MAP_KEY } from './constants';
 
 @Module({
 	controllers: [CloudConfigController],
 	providers: [
 		CloudConfigService,
 		{
-			provide: CONFIGS_MAP_KEY,
+			provide: CONFIG_MAP_KEY,
 			useValue: new Map<string, unknown>(),
 		},
 	],
