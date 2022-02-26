@@ -70,9 +70,8 @@ jobs:
         GITHUB_REF: ${{ github.ref }}
         GITHUB_SHA: ${{ github.sha }}
       # TODO: 가장 최근에 달린 태그 달아서 배포하기
-      # ${GITHUB_REF#refs/heads/} => 현재 브랜치
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --build-arg BRANCH=${GITHUB_REF#refs/heads/}
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:prod-$GITHUB_SHA
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:prod-$GITHUB_SHA
@@ -81,7 +80,7 @@ jobs:
     # Update ECS services
     - name: Update ECS services
       run: |
-        aws ecs update-service --force-new-deployment --service api --cluster cloud-config
+        aws ecs update-service --force-new-deployment --service cloud-config-server --cluster cloud-config
 
     # # Download task definition
     # - name: Download task definition
@@ -102,7 +101,7 @@ jobs:
     #   with:
     #     # task-definition: ${{ steps.task-def.outputs.task-definition }}
     #     task-definition: task-definition.json
-    #     service: api
+    #     service: cloud-config-server
     #     cluster: cloud-config
 
   # Create Sentry release

@@ -68,9 +68,8 @@ jobs:
           ECR_REPOSITORY: cloud-config-server
           IMAGE_TAG: latest
           GITHUB_REF: ${{ github.ref }}
-        # ${GITHUB_REF#refs/heads/} => 현재 브랜치
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --build-arg BRANCH=${GITHUB_REF#refs/heads/}
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest-$GITHUB_SHA
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest-$GITHUB_SHA
@@ -78,7 +77,7 @@ jobs:
       # Update ECS services
       - name: Update ECS services
         run: |
-          aws ecs update-service --force-new-deployment --service api-dev --cluster cloud-config
+          aws ecs update-service --force-new-deployment --service cloud-config-server-dev --cluster cloud-config
 
   # Create Sentry release
   # create-sentry-release:
