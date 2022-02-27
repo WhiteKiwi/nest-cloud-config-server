@@ -1,26 +1,20 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 
-import { configsDirPath } from '../../config';
 import { CipherModule } from '../cipher';
+import { DATA_STORAGE_KEY, DataStorageModule } from '../data-storage';
 import { CloudConfigController } from './cloud-config.controller';
 import { CloudConfigService } from './cloud-config.service';
-import { CONFIG_MAP_KEY } from './constants';
+import { CONFIG_DATA_STORAGE_KEY } from './constants';
 
 @Module({
-	imports: [CipherModule],
+	imports: [CipherModule, DataStorageModule],
 	controllers: [CloudConfigController],
 	providers: [
 		CloudConfigService,
 		{
-			provide: CONFIG_MAP_KEY,
-			useValue: new Map<string, unknown>(),
+			provide: CONFIG_DATA_STORAGE_KEY,
+			useExisting: DATA_STORAGE_KEY,
 		},
 	],
 })
-export class CloudConfigModule implements OnModuleInit {
-	constructor(private readonly cloudConfigService: CloudConfigService) {}
-
-	async onModuleInit() {
-		await this.cloudConfigService.load(configsDirPath);
-	}
-}
+export class CloudConfigModule {}
