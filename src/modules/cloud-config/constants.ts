@@ -1,1 +1,1 @@
-export const CONFIG_MAP_KEY = Symbol('CONFIGS_MAP_KEY');
+export const CONFIG_DATA_STORAGE_KEY = Symbol('CONFIG_DATA_STORAGE_KEY');
