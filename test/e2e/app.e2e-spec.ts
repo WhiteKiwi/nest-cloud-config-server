@@ -19,9 +19,10 @@ describe('AppController (e2e)', () => {
 	});
 
 	it('/health-check (GET)', async () => {
-		const { status, text } = await request.get('/health-check');
+		const { status, body } = await request.get('/health-check');
 
 		expect(status).toBe(HttpStatus.OK);
-		expect(text).toBe('OK');
+		expect(typeof body.version).toBe('string');
+		expect(typeof body.now).toBe('string');
 	});
 });
