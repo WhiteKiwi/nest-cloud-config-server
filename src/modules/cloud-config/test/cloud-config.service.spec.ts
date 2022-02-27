@@ -1,5 +1,0 @@
-describe('CloudConfigService', () => {
-	it('', () => {
-		//
-	});
-});
