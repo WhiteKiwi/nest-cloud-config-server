@@ -5,3 +5,4 @@ sample:
       - 'a'
       - 'b'
       - 'c'
+    key4-encrypted: '{cipher}U2FsdGVkX1+vh1KZrqMTWPtV5wc69VSWpqjA7P7ESEk=' 

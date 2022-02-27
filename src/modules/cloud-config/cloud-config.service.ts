@@ -4,6 +4,7 @@ import { load as parseYml } from 'js-yaml';
 import { join, parse as parsePath } from 'path';
 
 import { Config } from '../../core/types';
+import { CipherService } from '../cipher';
 import { CONFIG_MAP_KEY } from './constants';
 
 @Injectable()
@@ -11,6 +12,7 @@ export class CloudConfigService {
 	constructor(
 		@Inject(CONFIG_MAP_KEY)
 		private readonly configMap: Map<string, unknown>,
+		private readonly cipherService: CipherService,
 	) {}
 
 	getConfigValue(group: string): unknown {
@@ -46,10 +48,40 @@ export class CloudConfigService {
 
 		const ymlStr = await readFile(filePath, { encoding: 'utf-8' });
 		const value = parseYml(ymlStr) as Record<string, unknown>;
+		const decryptedValue = this.decryptObject(value) || {};
 
 		return {
 			group,
-			value,
+			value: decryptedValue,
 		};
+	}
+
+	private decryptObject(
+		obj: Record<string, unknown>,
+	): Record<string, unknown> | undefined {
+		if (!obj) return;
+
+		for (const key of Object.keys(obj)) {
+			const value = obj[key];
+			if (typeof value === 'object') {
+				obj[key] = this.decryptObject(obj[key] as Record<string, unknown>);
+				continue;
+			}
+			if (typeof value === 'string') {
+				if (value.startsWith('{cipher}'))
+					obj[key] = this.decrypt(value.replace(/^\{cipher\}/, '') as string);
+				continue;
+			}
+		}
+
+		return obj;
+	}
+
+	encrypt(data: string): string {
+		return this.cipherService.encrypt(data);
+	}
+
+	decrypt(encrypted: string): string {
+		return this.cipherService.decrypt(encrypted);
 	}
 }

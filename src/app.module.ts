@@ -9,6 +9,7 @@ import { CloudConfigModule } from './modules';
 		ConfigModule.forRoot({
 			isGlobal: true,
 			envFilePath: '.env',
+			cache: true,
 		}),
 		HealthCheckModule,
 		CloudConfigModule,
