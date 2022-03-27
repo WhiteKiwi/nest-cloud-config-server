@@ -7,10 +7,10 @@ module.exports = {
 		'^.+\\.(t|j)s$': 'ts-jest',
 	},
 	moduleNameMapper: {
-		'^@core/(.*)$': '<rootDir>/core/$1',
-		'^@common/(.*)$': '<rootDir>/common/$1',
-		'^@config/(.*)$': '<rootDir>/config/$1',
-		'^@modules/(.*)$': '<rootDir>/modules/$1',
+		'^@core/(.*)$': '<rootDir>/../../src/core/$1',
+		'^@common/(.*)$': '<rootDir>/../../src/common/$1',
+		'^@config/(.*)$': '<rootDir>/../../src/config/$1',
+		'^@modules/(.*)$': '<rootDir>/../../src/modules/$1',
 	},
 	testTimeout: 60000,
 };
