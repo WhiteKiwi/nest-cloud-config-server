@@ -35,11 +35,11 @@ export class YmlFileDataStorage implements DataStorage {
 		return parseYml(ymlStr);
 	}
 
-	load(key: string) {
+	async load(key: string) {
 		return this.map.get(key);
 	}
 
-	save(key: string, value: unknown) {
+	async save(key: string, value: unknown) {
 		this.map.set(key, value);
 	}
 }

@@ -8,7 +8,9 @@ import { CONFIG_DATA_STORAGE_KEY } from './constants';
 export class CloudConfigService {
 	constructor(
 		@Inject(CONFIG_DATA_STORAGE_KEY)
-		private readonly configDataStorage: DataStorage<Record<string, unknown>>,
+		private readonly configDataStorage: DataStorage<{
+			[key: string]: Record<string, unknown>;
+		}>,
 		private readonly cipherService: CipherService,
 	) {}
 
