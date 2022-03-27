@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: develop
-      url: https://cloud-config.dev.whitekiwi-test.com
+      url: https://cloud-config.dev.whitekiwi.link
 
     steps:
       - name: Checkout
