@@ -1,3 +1,4 @@
+import { ConfigAuthGuard } from '@modules/auth';
 import {
 	Body,
 	Controller,
@@ -6,11 +7,15 @@ import {
 	HttpStatus,
 	Param,
 	Post,
+	UseGuards,
 } from '@nestjs/common';
 
 import { CloudConfigService } from './cloud-config.service';
 
-@Controller()
+@UseGuards(ConfigAuthGuard)
+@Controller({
+	version: '1',
+})
 export class CloudConfigController {
 	constructor(private readonly cloudConfigService: CloudConfigService) {}
 

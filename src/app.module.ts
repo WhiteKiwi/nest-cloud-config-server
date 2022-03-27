@@ -2,7 +2,7 @@ import { HealthCheckModule } from '@kiwi-lib/nestjs';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-import { CloudConfigModule } from './modules';
+import { AuthModule, CloudConfigModule } from './modules';
 
 @Module({
 	imports: [
@@ -13,6 +13,7 @@ import { CloudConfigModule } from './modules';
 		}),
 		HealthCheckModule,
 		CloudConfigModule,
+		AuthModule,
 	],
 })
 export class AppModule {}
